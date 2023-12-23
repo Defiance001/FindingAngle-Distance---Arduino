@@ -42,7 +42,7 @@ void setup()
   pinMode(echoPin, INPUT); 
   servo1.attach(7);
   servo1.write(0);
-  //Serial.println("calibrating....");
+  Serial.println("calibrating...");
   int distance1 = calculateDistance();
   delay(2000);
   servo1.write(32);
