@@ -89,9 +89,9 @@ void loop(){
         Serial.print(" , ");
         Serial.println(targetDistance);
         }
-       //Serial.print(targetAngle);
-       //Serial.print(" , ");
-       //Serial.println(targetDistance);
+       Serial.print(targetAngle);
+       Serial.print(" , ");
+       Serial.println(targetDistance);
       }
     }
   
