@@ -25,6 +25,9 @@ unsigned long y = 1000;
 
 int averageEnviromentDistance; 
 
+int Led1 = 8; 
+int Led2 = 9;
+
 int calculateDistance(){
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -40,29 +43,14 @@ void setup()
   Serial.begin(9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT); 
+  pinMode(Led1, OUTPUT);
+  pinMode(Led2, OUTPUT);
   servo1.attach(7);
   servo1.write(0);
-  Serial.println("calibrating...");
-  int distance1 = calculateDistance();
-  delay(2000);
-  servo1.write(32);
-  int distance2 = calculateDistance();
-  delay(2000);
-  servo1.write(64);
-  int distance3 = calculateDistance();
-  delay(2000);
-  servo1.write(96); 
-  int distance4 = calculateDistance();
-  delay(2000);
-  servo1.write(128);
-  int distance5 = calculateDistance();
-  delay(2000);
-  servo1.write(160);
-  int distance6 = calculateDistance();
-  averageEnviromentDistance = ((distance1 + distance2 + distance3 + distance4 + distance5 + distance6)/6) - 10;
 }
 
 void loop(){
+  
   unsigned currentTime = millis(); 
 
   digitalWrite(trigPin, LOW);
@@ -76,13 +64,13 @@ void loop(){
     digitalWrite(trigPin, LOW); 
     }
   duration = pulseIn(echoPin, HIGH);
-  int Distance = duration*0.034/2;
+  float Distance = duration*0.034/2;
 
   if (currentTime - searchTargetST >= searchTargetInterval){
     int CservoAngle = servo1.read();
-    if(Distance<50 && CservoAngle>30){
+    if(Distance<100 && CservoAngle>0){
       int targetAngle = servo1.read();
-      int targetDistance = Distance; 
+      float targetDistance = Distance; 
       if(currentTime - x >= y){
         x = currentTime;
         Serial.print(targetAngle);
@@ -90,7 +78,7 @@ void loop(){
         Serial.println(targetDistance);
         }
        Serial.print(targetAngle);
-       Serial.print(" , ");
+       Serial.print(",");
        Serial.println(targetDistance);
       }
     }
@@ -99,9 +87,8 @@ void loop(){
     startTimeServo = currentTime; 
     servo1.write(servoAngle);
     servoAngle++;
-    if(servoAngle == 160) servoAngle = 20; 
+    if(servoAngle == 160) servoAngle = 20;
     }
 }
-
 
 
